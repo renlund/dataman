@@ -1,0 +1,5 @@
+\contentsline {section}{\numberline {0}Excuses, excuses}{1}
+\contentsline {section}{\numberline {1}Generation of data}{1}
+\contentsline {section}{\numberline {2}Examples}{1}
+\contentsline {section}{\numberline {3}Using \texttt {cr\_groups} to make \texttt {cr\_groups} objects}{3}
+\contentsline {section}{\numberline {4}Errors, warnings, and such}{6}

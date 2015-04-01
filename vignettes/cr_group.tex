@@ -1,0 +1,417 @@
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Example of 'cr_group' and its latex method}
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+\title{S3 class \texttt{cr\_group} and its \texttt{latex} method}
+\author{Henrik Renlund}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+
+\setcounter{section}{-1}
+\section{Excuses, excuses}
+This vignette is a mess\ldots
+
+\section{Generation of data}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{nr} \hlkwb{<-} \hlnum{7}\hlstd{; nc} \hlkwb{<-} \hlnum{5}\hlstd{; m} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{(nr}\hlopt{*}\hlstd{nc),} \hlkwc{nrow}\hlstd{=nr,} \hlkwc{byrow}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\hlkwd{rownames}\hlstd{(m)} \hlkwb{<-} \hlstd{letters[}\hlnum{1}\hlopt{:}\hlstd{nr]}
+\hlkwd{colnames}\hlstd{(m)} \hlkwb{<-} \hlstd{LETTERS[}\hlnum{1}\hlopt{:}\hlstd{nc]}
+\hlstd{rg} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"foo"}\hlstd{,} \hlstr{"bar"}\hlstd{,} \hlstr{"baz"}\hlstd{),} \hlkwc{length.out}\hlstd{=nr)}
+\hlstd{cg} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"Fuzzy"}\hlstd{,} \hlstr{"Busy"}\hlstd{),} \hlkwc{length.out}\hlstd{=nc)}
+\hlstd{M} \hlkwb{<-} \hlkwd{cr_group}\hlstd{(m, rg, cg)}
+\hlkwd{rm}\hlstd{(nr, nc)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section{Examples}
+Generate Table \ref{tab:1}:
+\begin{kframe}
+\begin{alltt}
+\hlstd{dummy} \hlkwb{<-} \hlkwd{latex}\hlstd{(}\hlkwc{object}\hlstd{=M,} \hlkwc{caption}\hlstd{=}\hlstr{"Example 1: default settings"}\hlstd{,} \hlkwc{label}\hlstd{=}\hlstr{"tab:1"}\hlstd{)}
+\end{alltt}
+\end{kframe}%latex.default(object = new_object, rgroup = c("foo", "bar", "baz"),     n.rgroup = c(3, 2, 2), cgroup = c("Fuzzy", "Busy"), n.cgroup = c(3,         2), title = title, file = file, colheads = colheads,     ...)%
+\begin{table}[!tbp]
+\caption{Example 1: default settings\label{tab:1}} 
+\begin{center}
+\begin{tabular}{lrrrcrr}
+\hline\hline
+\multicolumn{1}{l}{\bfseries }&\multicolumn{3}{c}{\bfseries Fuzzy}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Busy}\tabularnewline
+\cline{2-4} \cline{6-7}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{A}&\multicolumn{1}{c}{B}&\multicolumn{1}{c}{C}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{D}&\multicolumn{1}{c}{E}\tabularnewline
+\hline
+{\bfseries foo}&&&&&&\tabularnewline
+~~a&$ 1$&$ 3$&$ 5$&&$ 2$&$ 4$\tabularnewline
+~~d&$16$&$18$&$20$&&$17$&$19$\tabularnewline
+~~g&$31$&$33$&$35$&&$32$&$34$\tabularnewline
+\hline
+{\bfseries bar}&&&&&&\tabularnewline
+~~b&$ 6$&$ 8$&$10$&&$ 7$&$ 9$\tabularnewline
+~~e&$21$&$23$&$25$&&$22$&$24$\tabularnewline
+\hline
+{\bfseries baz}&&&&&&\tabularnewline
+~~c&$11$&$13$&$15$&&$12$&$14$\tabularnewline
+~~f&$26$&$28$&$30$&&$27$&$29$\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+Generate Table  \ref{tab:2}:
+\begin{kframe}
+\begin{alltt}
+\hlstd{M2} \hlkwb{<-} \hlstd{M;} \hlkwd{attr}\hlstd{(M2,} \hlstr{"rgroup"}\hlstd{)} \hlkwb{<-} \hlkwa{NULL}
+\hlstd{dummy} \hlkwb{<-} \hlkwd{latex}\hlstd{(M2,} \hlkwc{caption}\hlstd{=}\hlstr{"Example 2: no 'rgroup' attribute"}\hlstd{,} \hlkwc{label}\hlstd{=}\hlstr{"tab:2"}\hlstd{)}
+\end{alltt}
+\end{kframe}%latex.default(object = new_object, cgroup = c("Fuzzy", "Busy"),     n.cgroup = c(3, 2), title = title, file = file, colheads = colheads,     ...)%
+\begin{table}[!tbp]
+\caption{Example 2: no 'rgroup' attribute\label{tab:2}} 
+\begin{center}
+\begin{tabular}{lrrrcrr}
+\hline\hline
+\multicolumn{1}{l}{\bfseries }&\multicolumn{3}{c}{\bfseries Fuzzy}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Busy}\tabularnewline
+\cline{2-4} \cline{6-7}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{A}&\multicolumn{1}{c}{B}&\multicolumn{1}{c}{C}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{D}&\multicolumn{1}{c}{E}\tabularnewline
+\hline
+a&$ 1$&$ 3$&$ 5$&&$ 2$&$ 4$\tabularnewline
+b&$ 6$&$ 8$&$10$&&$ 7$&$ 9$\tabularnewline
+c&$11$&$13$&$15$&&$12$&$14$\tabularnewline
+d&$16$&$18$&$20$&&$17$&$19$\tabularnewline
+e&$21$&$23$&$25$&&$22$&$24$\tabularnewline
+f&$26$&$28$&$30$&&$27$&$29$\tabularnewline
+g&$31$&$33$&$35$&&$32$&$34$\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+Generate Table  \ref{tab:3}:
+\begin{kframe}
+\begin{alltt}
+\hlstd{M2} \hlkwb{<-} \hlstd{M;} \hlkwd{attr}\hlstd{(M2,} \hlstr{"cgroup"}\hlstd{)} \hlkwb{<-} \hlkwa{NULL}
+\hlstd{dummy} \hlkwb{<-} \hlkwd{latex}\hlstd{(M2,} \hlkwc{caption}\hlstd{=}\hlstr{"Example 3: no 'cgroup' attribute"}\hlstd{,} \hlkwc{label}\hlstd{=}\hlstr{"tab:3"}\hlstd{)}
+\end{alltt}
+\end{kframe}%latex.default(object = new_object, rgroup = c("foo", "bar", "baz"),     n.rgroup = c(3, 2, 2), title = title, file = file, colheads = colheads,     ...)%
+\begin{table}[!tbp]
+\caption{Example 3: no 'cgroup' attribute\label{tab:3}} 
+\begin{center}
+\begin{tabular}{lrrrrr}
+\hline\hline
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{A}&\multicolumn{1}{c}{B}&\multicolumn{1}{c}{C}&\multicolumn{1}{c}{D}&\multicolumn{1}{c}{E}\tabularnewline
+\hline
+{\bfseries foo}&&&&&\tabularnewline
+~~a&$ 1$&$ 2$&$ 3$&$ 4$&$ 5$\tabularnewline
+~~d&$16$&$17$&$18$&$19$&$20$\tabularnewline
+~~g&$31$&$32$&$33$&$34$&$35$\tabularnewline
+\hline
+{\bfseries bar}&&&&&\tabularnewline
+~~b&$ 6$&$ 7$&$ 8$&$ 9$&$10$\tabularnewline
+~~e&$21$&$22$&$23$&$24$&$25$\tabularnewline
+\hline
+{\bfseries baz}&&&&&\tabularnewline
+~~c&$11$&$12$&$13$&$14$&$15$\tabularnewline
+~~f&$26$&$27$&$28$&$29$&$30$\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+Generate Table  \ref{tab:4}:
+\begin{kframe}
+\begin{alltt}
+\hlstd{dummy} \hlkwb{<-} \hlkwd{latex}\hlstd{(M,} \hlkwc{r.perm}\hlstd{=}\hlstr{'alphabetical'}\hlstd{,} \hlkwc{caption}\hlstd{=}\hlstr{"Example 4: rgroup alphabetically"}\hlstd{,} \hlkwc{label}\hlstd{=}\hlstr{"tab:4"}\hlstd{)}
+\end{alltt}
+\end{kframe}%latex.default(object = new_object, rgroup = c("bar", "baz", "foo"),     n.rgroup = c(2, 2, 3), cgroup = c("Fuzzy", "Busy"), n.cgroup = c(3,         2), title = title, file = file, colheads = colheads,     ...)%
+\begin{table}[!tbp]
+\caption{Example 4: rgroup alphabetically\label{tab:4}} 
+\begin{center}
+\begin{tabular}{lrrrcrr}
+\hline\hline
+\multicolumn{1}{l}{\bfseries }&\multicolumn{3}{c}{\bfseries Fuzzy}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Busy}\tabularnewline
+\cline{2-4} \cline{6-7}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{A}&\multicolumn{1}{c}{B}&\multicolumn{1}{c}{C}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{D}&\multicolumn{1}{c}{E}\tabularnewline
+\hline
+{\bfseries bar}&&&&&&\tabularnewline
+~~b&$ 6$&$ 8$&$10$&&$ 7$&$ 9$\tabularnewline
+~~e&$21$&$23$&$25$&&$22$&$24$\tabularnewline
+\hline
+{\bfseries baz}&&&&&&\tabularnewline
+~~c&$11$&$13$&$15$&&$12$&$14$\tabularnewline
+~~f&$26$&$28$&$30$&&$27$&$29$\tabularnewline
+\hline
+{\bfseries foo}&&&&&&\tabularnewline
+~~a&$ 1$&$ 3$&$ 5$&&$ 2$&$ 4$\tabularnewline
+~~d&$16$&$18$&$20$&&$17$&$19$\tabularnewline
+~~g&$31$&$33$&$35$&&$32$&$34$\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+Generate Table  \ref{tab:4}:
+\begin{kframe}
+\begin{alltt}
+\hlstd{dummy} \hlkwb{<-} \hlkwd{latex}\hlstd{(M,} \hlkwc{r.perm}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{3}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{1}\hlstd{),} \hlkwc{c.perm}\hlstd{=}\hlstr{'alphabetical'} \hlstd{,} \hlkwc{caption}\hlstd{=}\hlstr{"Example 5: cgroup alphabetically, rgroup permutated"}\hlstd{,} \hlkwc{label}\hlstd{=}\hlstr{"tab:5"}\hlstd{)}
+\end{alltt}
+\end{kframe}%latex.default(object = new_object, rgroup = c("foo", "baz", "bar"),     n.rgroup = c(3, 2, 2), cgroup = c("Busy", "Fuzzy"), n.cgroup = c(2,         3), title = title, file = file, colheads = colheads,     ...)%
+\begin{table}[!tbp]
+\caption{Example 5: cgroup alphabetically, rgroup permutated\label{tab:5}} 
+\begin{center}
+\begin{tabular}{lrrcrrr}
+\hline\hline
+\multicolumn{1}{l}{\bfseries }&\multicolumn{2}{c}{\bfseries Busy}&\multicolumn{1}{c}{\bfseries }&\multicolumn{3}{c}{\bfseries Fuzzy}\tabularnewline
+\cline{2-3} \cline{5-7}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{A}&\multicolumn{1}{c}{B}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{C}&\multicolumn{1}{c}{D}&\multicolumn{1}{c}{E}\tabularnewline
+\hline
+{\bfseries foo}&&&&&&\tabularnewline
+~~a&$ 2$&$ 4$&&$ 1$&$ 3$&$ 5$\tabularnewline
+~~d&$17$&$19$&&$16$&$18$&$20$\tabularnewline
+~~g&$32$&$34$&&$31$&$33$&$35$\tabularnewline
+\hline
+{\bfseries baz}&&&&&&\tabularnewline
+~~c&$12$&$14$&&$11$&$13$&$15$\tabularnewline
+~~f&$27$&$29$&&$26$&$28$&$30$\tabularnewline
+\hline
+{\bfseries bar}&&&&&&\tabularnewline
+~~b&$ 7$&$ 9$&&$ 6$&$ 8$&$10$\tabularnewline
+~~e&$22$&$24$&&$21$&$23$&$25$\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+
+\section{Using \texttt{cr\_groups} to make \texttt{cr\_groups} objects}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{n} \hlkwb{<-} \hlnum{7}
+\hlstd{DF} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}
+   \hlkwc{x.man}\hlstd{=}\hlnum{1}\hlopt{:}\hlstd{n,}
+   \hlkwc{x.fem}\hlstd{=n}\hlopt{:}\hlnum{1}\hlstd{,}
+   \hlkwc{y.man}\hlstd{=}\hlopt{-}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{n),}
+   \hlkwc{y.fem}\hlstd{=}\hlopt{-}\hlstd{(n}\hlopt{:}\hlnum{1}\hlstd{)}
+\hlstd{)}
+\hlkwd{rownames}\hlstd{(DF)} \hlkwb{<-} \hlkwd{sprintf}\hlstd{(}\hlstr{"Ind: %d"}\hlstd{,} \hlnum{1}\hlopt{:}\hlstd{n)}
+\hlstd{crDF} \hlkwb{<-} \hlkwd{cr_group}\hlstd{(}
+   \hlkwc{x}\hlstd{=DF,}
+   \hlkwc{rgroup}\hlstd{=}\hlkwd{rep}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{],}\hlkwc{len}\hlstd{=}\hlnum{7}\hlstd{),}
+   \hlkwc{cgroup}\hlstd{=}\hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"gr-A"}\hlstd{,} \hlstr{"gr-B"}\hlstd{),} \hlkwc{each}\hlstd{=}\hlnum{2}\hlstd{),}
+   \hlkwc{colnames} \hlstd{=} \hlkwd{gsub}\hlstd{(}\hlstr{"[x|y]\textbackslash{}\textbackslash{}."}\hlstd{,} \hlstr{""}\hlstd{,} \hlkwd{names}\hlstd{(DF))}
+   \hlstd{)}
+
+\hlkwd{str}\hlstd{(crDF)}
+\end{alltt}
+\begin{verbatim}
+## An object of class 'cr_group' which contains:
+## 'data.frame':	7 obs. of  4 variables:
+##  $ x.man: int  1 2 3 4 5 6 7
+##  $ x.fem: int  7 6 5 4 3 2 1
+##  $ y.man: int  -1 -2 -3 -4 -5 -6 -7
+##  $ y.fem: int  -7 -6 -5 -4 -3 -2 -1
+##  - attr(*, "rgroup")= chr  "A" "B" "C" "A" ...
+##  - attr(*, "cgroup")= chr  "gr-A" "gr-A" "gr-B" "gr-B"
+##  - attr(*, "colnames")= chr  "man" "fem" "man" "fem"
+\end{verbatim}
+\begin{alltt}
+\hlkwd{str}\hlstd{(crDF[}\hlnum{7}\hlopt{:}\hlnum{1}\hlstd{,}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{4}\hlstd{)])}
+\end{alltt}
+\begin{verbatim}
+## An object of class 'cr_group' which contains:
+## 'data.frame':	7 obs. of  4 variables:
+##  $ x.man: int  7 6 5 4 3 2 1
+##  $ y.man: int  -7 -6 -5 -4 -3 -2 -1
+##  $ x.fem: int  1 2 3 4 5 6 7
+##  $ y.fem: int  -1 -2 -3 -4 -5 -6 -7
+##  - attr(*, "rgroup")= chr  "A" "C" "B" "A" ...
+##  - attr(*, "cgroup")= chr  "gr-A" "gr-B" "gr-A" "gr-B"
+##  - attr(*, "colnames")= chr  "man" "man" "fem" "fem"
+\end{verbatim}
+\begin{alltt}
+\hlstd{M} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{12}\hlstd{,} \hlkwc{nrow}\hlstd{=}\hlnum{4}\hlstd{)}
+\hlkwd{rownames}\hlstd{(M)} \hlkwb{<-} \hlkwd{sprintf}\hlstd{(}\hlstr{"Row %d"}\hlstd{,} \hlnum{1}\hlopt{:}\hlnum{4}\hlstd{)}
+\hlkwd{colnames}\hlstd{(M)} \hlkwb{<-} \hlkwd{sprintf}\hlstd{(}\hlstr{"Col %d"}\hlstd{,} \hlnum{1}\hlopt{:}\hlnum{3}\hlstd{)}
+\hlstd{(crM} \hlkwb{<-} \hlkwd{cr_group}\hlstd{(}\hlkwc{x}\hlstd{=M,} \hlkwc{rgroup}\hlstd{=LETTERS[}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{],} \hlkwc{cgroup}\hlstd{=letters[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+##       Col 1 Col 2 Col 3
+## Row 1     1     5     9
+## Row 2     2     6    10
+## Row 3     3     7    11
+## Row 4     4     8    12
+## attr(,"rgroup")
+## [1] "A" "B" "C" "D"
+## attr(,"cgroup")
+## [1] "a" "b" "c"
+## attr(,"class")
+## [1] "cr_group" "matrix"
+\end{verbatim}
+\begin{alltt}
+\hlstd{crM[}\hlnum{4}\hlopt{:}\hlnum{1}\hlstd{,}\hlkwd{c}\hlstd{(}\hlnum{3}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{)]}
+\end{alltt}
+\begin{verbatim}
+##       Col 3 Col 1 Col 2
+## Row 4    12     4     8
+## Row 3    11     3     7
+## Row 2    10     2     6
+## Row 1     9     1     5
+## attr(,"rgroup")
+## [1] "D" "C" "B" "A"
+## attr(,"cgroup")
+## [1] "c" "a" "b"
+## attr(,"class")
+## [1] "cr_group" "matrix"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{kframe}
+\begin{alltt}
+\hlstd{dummy} \hlkwb{<-} \hlkwd{latex}\hlstd{(crDF,} \hlkwc{caption}\hlstd{=}\hlstr{"'latex' on 'crDF'"}\hlstd{,} \hlkwc{label}\hlstd{=}\hlstr{"tab:a1"}\hlstd{,} \hlkwc{colheads}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\end{kframe}%latex.default(object = new_object, rgroup = c("A", "B", "C"),     n.rgroup = c(3, 2, 2), cgroup = c("gr-A", "gr-B"), n.cgroup = c(2,         2), title = title, file = file, colheads = colheads,     ...)%
+\begin{table}[!tbp]
+\caption{'latex' on 'crDF'\label{tab:a1}} 
+\begin{center}
+\begin{tabular}{lrrcrr}
+\hline\hline
+\multicolumn{1}{l}{\bfseries }&\multicolumn{2}{c}{\bfseries gr-A}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries gr-B}\tabularnewline
+\cline{2-3} \cline{5-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{man}&\multicolumn{1}{c}{fem}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{man}&\multicolumn{1}{c}{fem}\tabularnewline
+\hline
+{\bfseries A}&&&&&\tabularnewline
+~~Ind: 1&$1$&$7$&&$-1$&$-7$\tabularnewline
+~~Ind: 4&$4$&$4$&&$-4$&$-4$\tabularnewline
+~~Ind: 7&$7$&$1$&&$-7$&$-1$\tabularnewline
+\hline
+{\bfseries B}&&&&&\tabularnewline
+~~Ind: 2&$2$&$6$&&$-2$&$-6$\tabularnewline
+~~Ind: 5&$5$&$3$&&$-5$&$-3$\tabularnewline
+\hline
+{\bfseries C}&&&&&\tabularnewline
+~~Ind: 3&$3$&$5$&&$-3$&$-5$\tabularnewline
+~~Ind: 6&$6$&$2$&&$-6$&$-2$\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+\begin{kframe}\begin{alltt}
+\hlstd{dummy} \hlkwb{<-} \hlkwd{latex}\hlstd{(crM,} \hlkwc{caption}\hlstd{=}\hlstr{"'latex' on 'crM'"}\hlstd{,} \hlkwc{label}\hlstd{=}\hlstr{"tab:a2"}\hlstd{,} \hlkwc{colheads}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\end{kframe}%latex.default(object = new_object, rgroup = c("A", "B", "C",     "D"), n.rgroup = c(1, 1, 1, 1), cgroup = c("a", "b", "c"),     n.cgroup = c(1, 1, 1), title = title, file = file, colheads = colheads,     ...)%
+\begin{table}[!tbp]
+\caption{'latex' on 'crM'\label{tab:a2}} 
+\begin{center}
+\begin{tabular}{lrcrcr}
+\hline\hline
+\multicolumn{1}{l}{\bfseries }&\multicolumn{1}{c}{\bfseries a}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries b}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries c}\tabularnewline
+\cline{2-2} \cline{4-4} \cline{6-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{Col 1}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Col 2}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Col 3}\tabularnewline
+\hline
+{\bfseries A}&&&&&\tabularnewline
+~~Row 1&$1$&&$5$&&$ 9$\tabularnewline
+\hline
+{\bfseries B}&&&&&\tabularnewline
+~~Row 2&$2$&&$6$&&$10$\tabularnewline
+\hline
+{\bfseries C}&&&&&\tabularnewline
+~~Row 3&$3$&&$7$&&$11$\tabularnewline
+\hline
+{\bfseries D}&&&&&\tabularnewline
+~~Row 4&$4$&&$8$&&$12$\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+\section{Errors, warnings, and such}
+\textbf{N.B.} To pass the R CMD check, the code of a vignette must be able to run.
+Therefore, to illustrate errors, one must 'catch' them (see below).
+
+\noindent Generate an error:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{M2} \hlkwb{<-} \hlstd{crM;} \hlkwd{attr}\hlstd{(M2,} \hlstr{"cgroup"}\hlstd{)} \hlkwb{<-} \hlkwa{NULL}\hlstd{;} \hlkwd{attr}\hlstd{(M2,} \hlstr{"rgroup"}\hlstd{)} \hlkwb{<-} \hlkwa{NULL}
+\hlkwd{tryCatch}\hlstd{(dummy} \hlkwb{<-} \hlkwd{latex}\hlstd{(M2),} \hlkwc{error} \hlstd{=} \hlkwa{function}\hlstd{(}\hlkwc{e}\hlstd{)} \hlkwd{print}\hlstd{(e))}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\noindent Generate an error:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{M2} \hlkwb{<-} \hlstd{crM;} \hlkwd{class}\hlstd{(M2)} \hlkwb{<-} \hlkwa{NULL}
+\hlkwd{tryCatch}\hlstd{(dummy} \hlkwb{<-} \hlkwd{latex.cr_group}\hlstd{(M2),} \hlkwc{error} \hlstd{=} \hlkwa{function}\hlstd{(}\hlkwc{e}\hlstd{)} \hlkwd{print}\hlstd{(e))}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\noindent Generate a message (output hidden):
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{dummy} \hlkwb{<-} \hlkwd{latex}\hlstd{(crM,} \hlkwc{r.perm}\hlstd{=}\hlstr{'as'}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# [latex.cr\_group] 'rperm' interpreted as 'as.is'}}\end{kframe}
+\end{knitrout}
+
+\end{document}

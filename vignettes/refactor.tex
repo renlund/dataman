@@ -1,0 +1,470 @@
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{How to use 'refactor' (knitr produced documentation)}
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+
+
+
+\title{refactor}
+\author{Henrik Renlund}
+\newcommand{\code}{\texttt}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Purpose}
+The function\footnote{The name \code{relevel} was taken!} \code{refactor} was build mainly to be able to easily rename, reorder, and merge the levels of a factor. It can also create and exclude levels, and set \code{NA} to be a level.
+
+Motivating example:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{lev} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{" "}\hlstd{,} \hlstr{"never"}\hlstd{,} \hlstr{"some"}\hlstd{,} \hlstr{"a lot"}\hlstd{)}
+\hlstd{smoking} \hlkwb{<-} \hlkwd{factor}\hlstd{(}\hlkwd{sample}\hlstd{(}\hlkwc{x}\hlstd{=lev,} \hlnum{100}\hlstd{,} \hlnum{TRUE}\hlstd{),} \hlkwc{levels}\hlstd{=lev)}
+\hlkwd{table}\hlstd{(smoking)}
+\end{alltt}
+\begin{verbatim}
+## smoking
+##       never  some a lot 
+##    28    23    27    22
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Suppose you would want to clean up the variable \code{smoking} to have only levels "no" (previously 'never'), "yes" (previously 'some' and 'a lot') and "unknown" (previously ' ')  - and in that order.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{never}\hlstd{=}\hlstr{"no"}\hlstd{,} \hlkwc{some}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"yes"}\hlstd{,} \hlstr{"a lot"}\hlstd{),} \hlstr{" "}\hlstd{=}\hlstr{"unknown"}\hlstd{)}
+\hlkwd{table}\hlstd{(}\hlkwd{refactor}\hlstd{(smoking, L))}
+\end{alltt}
+\begin{verbatim}
+## 
+##      no     yes unknown 
+##      23      49      28
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section{Basic functionality}
+
+\subsection{Renaming and reordering levels}
+Levels can be renamed by providing a list with entries of the old level name that equals a new name.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B
+## Levels: A B
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{A}\hlstd{=}\hlstr{"newA"}\hlstd{,} \hlkwc{B}\hlstd{=}\hlstr{"newB"}\hlstd{)}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+\begin{verbatim}
+## [1] newA newB
+## Levels: newA newB
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The order of the list determines the order of the levels created.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{],} \hlkwc{levels}\hlstd{=LETTERS[}\hlnum{2}\hlopt{:}\hlnum{1}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B
+## Levels: B A
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{A}\hlstd{=}\hlstr{"newA"}\hlstd{,} \hlkwc{B}\hlstd{=}\hlstr{"newB"}\hlstd{)}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+\begin{verbatim}
+## [1] newA newB
+## Levels: newA newB
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+If you simply want to reorder you must provide a \code{NULL} new name.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B C
+## Levels: A B C
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{B}\hlstd{=}\hlkwa{NULL}\hlstd{,} \hlkwc{A}\hlstd{=}\hlkwa{NULL}\hlstd{,} \hlkwc{C}\hlstd{=}\hlkwa{NULL}\hlstd{)}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+\begin{verbatim}
+## [1] A B C
+## Levels: B A C
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The list \code{L} need not cover all existing levels. If not, the remaining levels will be added in the same order as they appeared in the original.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B C D E
+## Levels: A B C D E
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{D}\hlstd{=}\hlkwa{NULL}\hlstd{,} \hlkwc{B}\hlstd{=}\hlstr{"newB"}\hlstd{)}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+\begin{verbatim}
+## [1] A    newB C    D    E   
+## Levels: D newB A C E
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\subsection{Adding and merging levels}
+If \code{L} includes a non-existing level, this level will be added.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B
+## Levels: A B
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{Foo}\hlstd{=}\hlkwa{NULL}\hlstd{)}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+\begin{verbatim}
+## [1] A B
+## Levels: Foo A B
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+There is an option to put these new levels at the end of the levels created.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B
+## Levels: A B
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{Foo}\hlstd{=}\hlkwa{NULL}\hlstd{,} \hlkwc{Bar}\hlstd{=}\hlkwa{NULL}\hlstd{)}
+\hlkwd{refactor}\hlstd{(x,L,} \hlkwc{new.last}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] A B
+## Levels: A B Foo Bar
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+If you want to merge two levels this can be acheived by including one in the other, as is best shown by example:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B C
+## Levels: A B C
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{A}\hlstd{=}\hlstr{"B"}\hlstd{)} \hlcom{# level B to be absorbed by level A}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+\begin{verbatim}
+## [1] A A C
+## Levels: A C
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Note that the above did not rename \code{A} as \code{B}. The entry \code{A} in list \code{L} can contain a new name as well as levels to be absorbed. Thus it cannot be renamed as an existing level.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B C
+## Levels: A B C
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{A}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"merge_AB"}\hlstd{,} \hlstr{"B"}\hlstd{))}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+\begin{verbatim}
+## [1] merge_AB merge_AB C       
+## Levels: merge_AB C
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The same thing can be acheived by
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B C
+## Levels: A B C
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{B}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"merge_AB"}\hlstd{,} \hlstr{"A"}\hlstd{))}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+\begin{verbatim}
+## [1] merge_AB merge_AB C       
+## Levels: merge_AB C
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The order of entry \code{B} is unimportant, but the first non-level name will be used as a new name.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B C
+## Levels: A B C
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{B}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"A"}\hlstd{,} \hlstr{"merger"}\hlstd{,} \hlstr{"new_name"}\hlstd{))}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in refactor(x, L): [refactor] Multiple new names for level 'B'. Only the first one will be used.}}\begin{verbatim}
+## [1] merger merger C     
+## Levels: merger C
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+One cannot merge an existing level into more than one place, the first encountered will be used.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B C
+## Levels: A B C
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{B}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"merge_AB"}\hlstd{,}\hlstr{"A"}\hlstd{),} \hlkwc{C}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"new_C"}\hlstd{,} \hlstr{"A"}\hlstd{))}
+\hlkwd{refactor}\hlstd{(x,L)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in refactor(x, L): [refactor] Key 'C' has entries used previously. These will be skipped}}\begin{verbatim}
+## [1] merge_AB merge_AB new_C   
+## Levels: merge_AB new_C
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{The empty string}
+One cannot specify the element name in a list explicitly to be the empty string
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# list(a_name="value", ""="another_value") # not possible}
+\hlkwd{list}\hlstd{(}\hlkwc{a_name}\hlstd{=}\hlstr{"value"}\hlstd{,} \hlstr{"another_value"}\hlstd{)} \hlcom{# possible}
+\end{alltt}
+\begin{verbatim}
+## $a_name
+## [1] "value"
+## 
+## [[2]]
+## [1] "another_value"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Therefore, if you want to recode a empty string value can do
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"A"}\hlstd{,} \hlstr{""}\hlstd{,} \hlstr{"B"}\hlstd{)}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlstr{"A"}\hlstd{=}\hlstr{"New A"}\hlstd{,} \hlstr{"not_so_empty_now"}\hlstd{,} \hlstr{"B"}\hlstd{=}\hlstr{"New B"}\hlstd{)}
+\hlkwd{refactor}\hlstd{(x, L)}
+\end{alltt}
+\begin{verbatim}
+## [1] New A            not_so_empty_now New B           
+## Levels: New A not_so_empty_now New B
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+\subsection{Excluding and adding \code{NA} as level}
+You can delete levels, i.e.\ turning it into \code{NA}.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{]))}
+\end{alltt}
+\begin{verbatim}
+## [1] A B C D
+## Levels: A B C D
+\end{verbatim}
+\begin{alltt}
+\hlkwd{refactor}\hlstd{(x,}\hlkwc{exclude}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"A"}\hlstd{,}\hlstr{"C"}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] <NA> B    <NA> D   
+## Levels: B D
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+You can make \code{NA} into a level \code{missing} by setting \code{na.level} to any non null value
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(}\hlkwd{c}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{],}\hlnum{NA}\hlstd{)))}
+\end{alltt}
+\begin{verbatim}
+## [1] A    B    <NA>
+## Levels: A B
+\end{verbatim}
+\begin{alltt}
+\hlkwd{refactor}\hlstd{(x,}\hlkwc{na.level}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] A       B       missing
+## Levels: A B missing
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+or specify any name by setting \code{na.level} to a string
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(}\hlkwd{c}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{],}\hlnum{NA}\hlstd{)))}
+\end{alltt}
+\begin{verbatim}
+## [1] A    B    <NA>
+## Levels: A B
+\end{verbatim}
+\begin{alltt}
+\hlkwd{refactor}\hlstd{(x,}\hlkwc{na.level}\hlstd{=}\hlstr{"saknas"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] A      B      saknas
+## Levels: A B saknas
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section{Order of operations}
+The function operates in the following order:
+\begin{itemize}
+\item if wanted, turn \code{NA} into a level
+\item if wanted, turn certain levels into \code{NA}
+\item if wanted, rename and reorder levels
+\end{itemize}
+Thus you can delete levels whilst making original \code{NA} into a new level.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(}\hlkwd{c}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{],}\hlnum{NA}\hlstd{)))}
+\end{alltt}
+\begin{verbatim}
+## [1] A    B    <NA>
+## Levels: A B
+\end{verbatim}
+\begin{alltt}
+\hlkwd{refactor}\hlstd{(x,} \hlkwc{exclude}\hlstd{=}\hlstr{"A"}\hlstd{,} \hlkwc{na.level}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] <NA>    B       missing
+## Levels: B missing
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+But would you want to consider both \code{A} and \code{NA} as \code{missing} you would have to 'rename' \code{NA} and let that name be absorbed by \code{A} which takes the new name 'missing'.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{(x} \hlkwb{<-} \hlkwd{factor}\hlstd{(}\hlkwd{c}\hlstd{(LETTERS[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{],}\hlnum{NA}\hlstd{)))}
+\end{alltt}
+\begin{verbatim}
+## [1] A    B    <NA>
+## Levels: A B
+\end{verbatim}
+\begin{alltt}
+\hlstd{L} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{A}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"missing"}\hlstd{,} \hlstr{"NA_name"}\hlstd{))}
+\hlkwd{refactor}\hlstd{(x, L,} \hlkwc{na.level}\hlstd{=}\hlstr{"NA_name"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] missing B       missing
+## Levels: missing B
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+
+\end{document}

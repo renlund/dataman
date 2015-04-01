@@ -1,0 +1,17 @@
+Package: dataman
+Type: Package
+Title: Data management
+Version: 0.1.0
+Date: 2015-04-01
+Author: Henrik Renlund
+Maintainer: Henrik Renlund <henrikrenlund@gmail.com>
+Description: Interactive-ish tools for finding and extracting data, and documenting the process thereof
+Depends:
+    R (>= 3.0.0)
+Imports:
+    Hmisc,
+    survival
+License: GPL-2
+VignetteBuilder: knitr
+Suggests:
+    knitr

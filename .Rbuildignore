@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+LICENCE
+README.md
+.gitignore
+dataman.Rproj
+TODO.txt

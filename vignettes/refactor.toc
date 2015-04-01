@@ -1,0 +1,7 @@
+\contentsline {section}{\numberline {1}Purpose}{1}
+\contentsline {section}{\numberline {2}Basic functionality}{2}
+\contentsline {subsection}{\numberline {2.1}Renaming and reordering levels}{2}
+\contentsline {subsection}{\numberline {2.2}Adding and merging levels}{3}
+\contentsline {subsection}{\numberline {2.3}The empty string}{5}
+\contentsline {subsection}{\numberline {2.4}Excluding and adding \texttt {NA} as level}{6}
+\contentsline {section}{\numberline {3}Order of operations}{6}
