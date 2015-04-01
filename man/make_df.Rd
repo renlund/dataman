@@ -28,12 +28,13 @@ make_df(c("mpg", "disp"), env=datasets::mtcars)
 # methods include 'list' ...
 make_df(list(x=1:2, y=letters[1:2]))
 # and 'survfit'
-library(survival)
-n <- 50
-s <- Surv(rexp(n), rbinom(n,1,0.2))
-f <- factor(rep(letters[1:2], length.out=n))
-sf <- survfit(s~f)
-make_df(sf)
+if(FALSE){
+  n <- 50
+  s <- survival::Surv(rexp(n), rbinom(n,1,0.2))
+  f <- factor(rep(letters[1:2], length.out=n))
+  sf <- survival::survfit(s~f)
+  make_df(sf)
+}
 }
 \author{
 Henrik Renlund

@@ -16,7 +16,7 @@ knit2pdf("vignettes/cr_group.rnw", clean=TRUE)
 \tableofcontents
 
 <<source, cache=FALSE, include=FALSE, echo=FALSE>>=
-library(Hmisc)
+#library(Hmisc)
 library(dataman)
 set.seed(19790424)
 @

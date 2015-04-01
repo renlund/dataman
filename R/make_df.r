@@ -6,7 +6,6 @@
 #' @param env an environment
 #' @param ... passed arguments
 #' @author Henrik Renlund
-#' @importFrom survival Surv survfit
 #' @examples
 #' # combine variables into a data frame
 #' x <- 1:2
@@ -17,12 +16,13 @@
 #' # methods include 'list' ...
 #' make_df(list(x=1:2, y=letters[1:2]))
 #' # and 'survfit'
-#' library(survival)
-#' n <- 50
-#' s <- Surv(rexp(n), rbinom(n,1,0.2))
-#' f <- factor(rep(letters[1:2], length.out=n))
-#' sf <- survfit(s~f)
-#' make_df(sf)
+#' if(FALSE){
+#'   n <- 50
+#'   s <- survival::Surv(rexp(n), rbinom(n,1,0.2))
+#'   f <- factor(rep(letters[1:2], length.out=n))
+#'   sf <- survival::survfit(s~f)
+#'   make_df(sf)
+#' }
 #' @export
 
 make_df <- function(object, env, ...) UseMethod("make_df")
@@ -118,8 +118,8 @@ make_df.survfit <- function(object, env=.GlobalEnv, ...){
 }
 
 # library(survival)
-# S <- Surv(time=rexp(50,1), event=rbinom(50,1,0.2))
-# sf <- survfit(S~1)
+# S <- survival::Surv(time=rexp(50,1), event=rbinom(50,1,0.2))
+# sf <- survival::survfit(S~1)
 # sf2 <- sf
 #
 # make_df(object=  sf)

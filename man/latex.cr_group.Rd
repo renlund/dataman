@@ -4,7 +4,7 @@
 \alias{latex.cr_group}
 \title{Latex method for objects of class \code{cr_group}}
 \usage{
-\method{latex}{cr_group}(object, r.perm = "as.is", c.perm = "as.is",
+latex.cr_group(object, r.perm = "as.is", c.perm = "as.is",
   colheads = TRUE, file = "", title = "", ...)
 }
 \arguments{
@@ -41,7 +41,7 @@ colnames(M) <- LETTERS[1:nc]
 attr(M, "rgroup") <- rep(c("foo", "bar", "baz"), length.out=nr)
 attr(M, "cgroup") <- rep(c("Fuzzy", "Busy"), length.out=nc)
 class(M) <- "cr_group"
-dummy <- latex(M, r.perm='as.is', c.perm='alpha')
+dummy <- Hmisc::latex(M, r.perm='as.is', c.perm='alpha')
 # see vignette
 }
 }
