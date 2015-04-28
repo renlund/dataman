@@ -39,25 +39,25 @@ rm(nr, nc)
 \section{Examples}
 Generate Table \ref{tab:1}:
 <<latex_M1, echo=TRUE, include=TRUE, results='asis'>>=
-dummy <- latex(object=M, caption="Example 1: default settings", label="tab:1")
+dummy <- Hmisc::latex(object=M, caption="Example 1: default settings", label="tab:1")
 @
 Generate Table  \ref{tab:2}:
 <<latex_M2, echo=TRUE, include=TRUE, results='asis'>>=
 M2 <- M; attr(M2, "rgroup") <- NULL
-dummy <- latex(M2, caption="Example 2: no 'rgroup' attribute", label="tab:2")
+dummy <- Hmisc::latex(M2, caption="Example 2: no 'rgroup' attribute", label="tab:2")
 @
 Generate Table  \ref{tab:3}:
 <<latex_M3, echo=TRUE, include=TRUE, results='asis'>>=
 M2 <- M; attr(M2, "cgroup") <- NULL
-dummy <- latex(M2, caption="Example 3: no 'cgroup' attribute", label="tab:3")
+dummy <- Hmisc::latex(M2, caption="Example 3: no 'cgroup' attribute", label="tab:3")
 @
 Generate Table  \ref{tab:4}:
 <<latex_M4, echo=TRUE, include=TRUE, results='asis'>>=
-dummy <- latex(M, r.perm='alphabetical', caption="Example 4: rgroup alphabetically", label="tab:4")
+dummy <- Hmisc::latex(M, r.perm='alphabetical', caption="Example 4: rgroup alphabetically", label="tab:4")
 @
 Generate Table  \ref{tab:4}:
 <<latex_M5, echo=TRUE, include=TRUE, results='asis'>>=
-dummy <- latex(M, r.perm=c(3,2,1), c.perm='alphabetical' , caption="Example 5: cgroup alphabetically, rgroup permutated", label="tab:5")
+dummy <- Hmisc::latex(M, r.perm=c(3,2,1), c.perm='alphabetical' , caption="Example 5: cgroup alphabetically, rgroup permutated", label="tab:5")
 @
 
 
@@ -89,8 +89,8 @@ crM[4:1,c(3,1,2)]
 @
 
 <<in_action, echo=TRUE, include=TRUE, results='asis'>>=
-dummy <- latex(crDF, caption="'latex' on 'crDF'", label="tab:a1", colheads=TRUE)
-dummy <- latex(crM, caption="'latex' on 'crM'", label="tab:a2", colheads=TRUE)
+dummy <- Hmisc::latex(crDF, caption="'latex' on 'crDF'", label="tab:a1", colheads=TRUE)
+dummy <- Hmisc::latex(crM, caption="'latex' on 'crM'", label="tab:a2", colheads=TRUE)
 @
 
 \section{Errors, warnings, and such}
@@ -100,7 +100,7 @@ Therefore, to illustrate errors, one must 'catch' them (see below).
 \noindent Generate an error:
 <<error1, echo=TRUE, include=TRUE, results='hide', error=TRUE>>=
 M2 <- crM; attr(M2, "cgroup") <- NULL; attr(M2, "rgroup") <- NULL
-tryCatch(dummy <- latex(M2), error = function(e) print(e))
+tryCatch(dummy <- Hmisc::latex(M2), error = function(e) print(e))
 @
 \noindent Generate an error:
 <<error2, echo=TRUE, include=TRUE, results='hide', error=TRUE>>=
@@ -109,7 +109,7 @@ tryCatch(dummy <- latex.cr_group(M2), error = function(e) print(e))
 @
 \noindent Generate a message (output hidden):
 <<message1, echo=TRUE, include=TRUE, results='hide', message=TRUE>>=
-dummy <- latex(crM, r.perm='as')
+dummy <- Hmisc::latex(crM, r.perm='as')
 @
 
 \end{document}
