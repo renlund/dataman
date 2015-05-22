@@ -36,6 +36,7 @@ data_man_get_recode <- function(container, file = "", lab.prefix = "tab:recode_"
       Hmisc::latex(object = L,
                    file = file,
                    append = TRUE,
+                   title = "old \\ new",
                    caption = paste0("Recoding of data base ",ttify(X$where), " entry ",ttify(X$var)," into ",ttify(X$name),"."),
                    label = paste0(lab.prefix, X$name),
                    ...)
