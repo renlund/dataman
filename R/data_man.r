@@ -19,7 +19,7 @@
 #' @export
 
 data_man <- function(name,
-                     var = NA,
+                     var = name,
                      where = NA,
                      recode = NULL,
                      date = NULL,
@@ -41,6 +41,9 @@ data_man <- function(name,
         cat("Adding data base '", where,"' entry '", var, "' as variable '", name,"'\n", sep = "")
         cat("A variable of class: ", class_var, "\n")
         #if(!any(class_var %in% c("Date", "POSIXct", "POSIXt"))){
+        n_miss <- sum(is.na(tmp_var))
+        perc_miss <- signif(n_miss / length(n_miss), 2)
+        cat(paste0("There are ", n_miss, " (",perc_miss,"%) missing.\n"))
         if(class_var %in% c("numeric", "integer")){
             cat("\nSummary of numeric variable:")
             cat("\n    min:", min(tmp_var, na.rm=T), "\n    max:", max(tmp_var, na.rm=TRUE), "\n    mean:",mean(tmp_var, na.rm=TRUE), "\n")

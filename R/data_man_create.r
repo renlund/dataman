@@ -14,7 +14,7 @@ data_man_create <- function(id,
                             na.where = NULL,
                             dplyr = TRUE
 ){
-    if(missing(id.name)) id.name <- "id"
+    # if(missing(id.name)) id.name <- "id"
     if(missing(container)){
         tryCatch(expr = container <- get("data_man_container", envir = .GlobalEnv),
                  error = function(e) stop("[data_man_create] no default container available"))

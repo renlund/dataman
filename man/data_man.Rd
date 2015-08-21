@@ -4,7 +4,7 @@
 \alias{data_man}
 \title{Data Management Tool (interactive-ish)}
 \usage{
-data_man(name, var = NA, where = NA, recode = NULL, date = NULL,
+data_man(name, var = name, where = NA, recode = NULL, date = NULL,
   rg = NULL, comment = NULL, container = "data_man_container",
   label = FALSE, check = TRUE)
 }

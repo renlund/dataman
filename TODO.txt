@@ -1,2 +1,0 @@
- * use dplyr in data_man_create to speed things up
- * remove make_df as it is crappy
