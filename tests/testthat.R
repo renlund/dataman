@@ -1,3 +1,4 @@
 library(testthat)
 library(dataman)
-test_package("dataman")
+
+test_check("dataman")
