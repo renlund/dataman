@@ -1,13 +1,15 @@
-#' @title Look for a pattern in the \code{names} of R objects (typically data frames) and
+#' @title Find variable
+#'
+#' @description Look for a pattern in the \code{names} of R objects (typically data frames) and
 #' return the hits
 #'
-#' @description This function applies \code{\link{grepr}} to \code{\link{names}} of a set
+#' @details This function applies \code{\link{grepr}} to \code{\link{names}} of a set
 #' of R objects and returns the results as a list
 #'
 #' @author Henrik Renlund
 #' @param pattern pattern to look for
 #' @param dfs logical or character string. If a character vector of the names of
-#' R objects is given, the \code{names} of these will be exmined with \code{grepr}
+#' R objects is given, the \code{names} of these will be examined with \code{grepr}
 #' ; if \code{TRUE} all data frames in the global environment will be examined and if
 #' \code{FALSE} all objects with a 'names' attribute will be examined.
 #' @param ignore.case logical; should upper/lower case distinction be ignored? (default \code{TRUE})

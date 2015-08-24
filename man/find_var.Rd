@@ -2,8 +2,7 @@
 % Please edit documentation in R/find_var.r
 \name{find_var}
 \alias{find_var}
-\title{Look for a pattern in the \code{names} of R objects (typically data frames) and
-return the hits}
+\title{Find variable}
 \usage{
 find_var(pattern, dfs = TRUE, ignore.case = TRUE, ...)
 }
@@ -20,6 +19,10 @@ R objects is given, the \code{names} of these will be exmined with \code{grepr}
 \item{...}{arguments to be passed to \code{\link{grep}}}
 }
 \description{
+Look for a pattern in the \code{names} of R objects (typically data frames) and
+return the hits
+}
+\details{
 This function applies \code{\link{grepr}} to \code{\link{names}} of a set
 of R objects and returns the results as a list
 }
