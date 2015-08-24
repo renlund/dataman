@@ -5,3 +5,4 @@ README.md
 .gitignore
 dataman.Rproj
 TODO.txt
+^\.travis\.yml$
