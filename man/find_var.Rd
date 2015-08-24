@@ -10,7 +10,7 @@ find_var(pattern, dfs = TRUE, ignore.case = TRUE, ...)
 \item{pattern}{pattern to look for}
 
 \item{dfs}{logical or character string. If a character vector of the names of
-R objects is given, the \code{names} of these will be exmined with \code{grepr}
+R objects is given, the \code{names} of these will be examined with \code{grepr}
 ; if \code{TRUE} all data frames in the global environment will be examined and if
 \code{FALSE} all objects with a 'names' attribute will be examined.}
 

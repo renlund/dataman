@@ -12,6 +12,7 @@ Depends:
 License: GPL-2
 VignetteBuilder: knitr
 Suggests:
+    Hmisc,
     knitr,
     testthat,
     dplyr,
