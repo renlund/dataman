@@ -33,7 +33,7 @@ data_man_get_recode <- function(container, file = "", lab.prefix = "tab:recode_"
          }
       }
       var <- ttify(X$where)
-      if(!requireNamespace("Hmisc")){
+      if(requireNamespace("Hmisc")){
           Hmisc::latex(object = L,
                        file = file,
                        append = TRUE,
