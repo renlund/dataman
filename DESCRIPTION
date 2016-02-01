@@ -17,3 +17,4 @@ Suggests:
     testthat,
     dplyr,
     survival
+RoxygenNote: 5.0.1
