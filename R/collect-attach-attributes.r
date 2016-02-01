@@ -25,6 +25,7 @@ collect_attr <- function(df, attr = "label"){
 }
 
 #' @title Attach attributes
+#' @description Attach attributes from a named vector ...
 #' @param df data frame or similar object
 #' @param catcher named vector of attributes
 #' @param attr attribute

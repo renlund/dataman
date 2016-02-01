@@ -13,6 +13,9 @@ attach_attr(df, catcher, attr = "label")
 
 \item{attr}{attribute}
 }
+\description{
+Attach attributes from a named vector ...
+}
 \author{
 Henrik Renlund
 }
