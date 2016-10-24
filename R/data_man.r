@@ -65,9 +65,10 @@ data_man <- function(name,
                     cat("There are only NA or empty values!\n")
                 }
             }
-        } else if(class_var %in% c("Date", "POSIXct")){
-            cat("\nDates span from min =", min(tmp_var, na.rm = TRUE),
-                "to max = ", max(tmp_var, na.rm = TRUE))
+        }
+        if(class_var %in% c("Date", "POSIXct")){
+            cat("\nDates span from min =", as.character(min(tmp_var, na.rm = TRUE)),
+                "to max = ", as.character(max(tmp_var, na.rm = TRUE)), "\n")
         }
         if(!is.null(recode)){
             cat("\nCross-tabulating the recoding: \n\n")
