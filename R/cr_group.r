@@ -41,7 +41,7 @@ cr_group <- function(x,rgroup,cgroup,colnames){
 # This is only used in 'test_cr_group.r'
 
 CReator <- function(n=3, m=2, rg=TRUE, cg=TRUE, cn=TRUE, df=FALSE){
-        M <- matrix(rpois(n*m,15), nrow=n, ncol=m)
+        M <- matrix(stats::rpois(n*m,15), nrow=n, ncol=m)
         if(df) M <- as.data.frame(M)
         rg.code <- if(rg) "rgroup=letters[1:n]" else ""
         cr.code <- if(cg) "cgroup=LETTERS[1:m]" else ""

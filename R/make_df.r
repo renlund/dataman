@@ -70,7 +70,7 @@ make_df.character <- function(object, env=.GlobalEnv, ...){
          klasser <- intersect(klass, klasser)
       }
    }
-   curr_extensions <- setdiff(gsub("make_df.", "", methods("make_df")), c("default", "character"))
+   curr_extensions <- setdiff(gsub("make_df.", "", utils::methods("make_df")), c("default", "character"))
    if(length(klasser)>0){
       if(any(klasser %in% curr_extensions)){
          # do we need to force all items in object to have the same class?
