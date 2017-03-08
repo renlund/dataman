@@ -6,7 +6,7 @@
 \usage{
 data_man(name, var = name, where = NA, recode = NULL, date = NULL,
   rg = NULL, comment = NULL, container = "data_man_container",
-  label = FALSE, check = TRUE)
+  label = NULL, check = TRUE)
 }
 \arguments{
 \item{name}{(new) name of variable}

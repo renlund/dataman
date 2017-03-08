@@ -25,7 +25,7 @@ make_df.data_man <- function(object, env, ..., where = NULL, comment = NULL, rgr
         where <- if(any(unlist(lapply(object, FUN = function(x) !is.null(x$where))))) TRUE else FALSE
     }
     if(!missing(env)) {
-        warning("[make_df.data_man] argument 'env' does not do anything...\n (Included for S3 method consistency.)")
+        message("[make_df.data_man] argument 'env' does not do anything...\n (Included for S3 method consistency.)")
     }
     n_col = 2 + where + comment
     M <- matrix(NA_character_, nrow=length(object), ncol=n_col)
