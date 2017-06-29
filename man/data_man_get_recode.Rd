@@ -26,4 +26,3 @@ data_man_get_recode(container, file = "", lab.prefix = "tab:recode_",
 \author{
 Henrik Renlund
 }
-

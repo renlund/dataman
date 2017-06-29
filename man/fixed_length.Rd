@@ -33,4 +33,3 @@ fixed_length(8:12, fill = "0")
 \author{
 Henrik Renlund
 }
-

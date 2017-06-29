@@ -23,10 +23,9 @@ for \code{find_var} but can at times be useful.)
 \examples{
 grepr(pattern="a", x=names(datasets::mtcars))
 }
-\author{
-Henrik Renlund
-}
 \seealso{
 \code{\link{grep}}, \code{\link{grepl}}
 }
-
+\author{
+Henrik Renlund
+}

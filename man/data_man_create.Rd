@@ -21,4 +21,3 @@ data_man_create(id, container, id.name, na.where = NULL, dplyr = TRUE)
 \description{
 ...
 }
-

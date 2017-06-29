@@ -23,4 +23,3 @@ functions checks that the dimensionality is OK.
 \author{
 Henrik Renlund
 }
-

@@ -30,4 +30,3 @@ the function will guess that you want}
 \description{
 ...
 }
-

@@ -65,7 +65,8 @@ data_man_create <- function(id,
             )
             names(loc.df) <- c(name, the_id)
             ## DF <- dplyr::inner_join(DF, loc.df, by = the_id)
-            DF <- dplyr::full_join(DF, loc.df, by = the_id)
+            ## DF <- dplyr::full_join(DF, loc.df, by = the_id)
+            DF <- dplyr::left_join(DF, loc.df, by = the_id)
             if(!is.null(X$label)) attr(DF[[name]], "label") <- X$label
         } else{
             loc.df <- data.frame(
@@ -74,7 +75,8 @@ data_man_create <- function(id,
             )
             names(loc.df) <- c(name, the_id)
             ## DF <- merge(DF, loc.df, by.x = the_id)
-            DF <- merge(DF, loc.df, by.x = the_id, all = TRUE)
+            ## DF <- merge(DF, loc.df, by.x = the_id, all = TRUE)
+            DF <- merge(x = DF, y = loc.df, by.x = the_id, all.x = TRUE)
             if(!is.null(X$label)) attr(DF[[name]], "label") <- X$label
         }
     }

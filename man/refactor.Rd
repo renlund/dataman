@@ -30,10 +30,9 @@ x <- LETTERS[1:5] # x <- factor(x)
 L <- list(B=c("nyB", "C"),E=NULL, D="nyD")
 refactor(x,L)
 }
-\author{
-Henrik Renlund
-}
 \seealso{
 \code{\link{factor}}, \code{\link{relevel}}
 }
-
+\author{
+Henrik Renlund
+}

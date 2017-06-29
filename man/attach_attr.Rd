@@ -16,10 +16,9 @@ attach_attr(df, catcher, attr = "label")
 \description{
 Attach attributes from a named vector ...
 }
-\author{
-Henrik Renlund
-}
 \seealso{
 collect_attr
 }
-
+\author{
+Henrik Renlund
+}

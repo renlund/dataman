@@ -17,4 +17,3 @@ to_date(x, not_dates = c("", " "), ...)
 wrapper for \code{as.Date} that replaces ""-strings with
 \code{NA} before conversion
 }
-

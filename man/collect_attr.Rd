@@ -32,4 +32,3 @@ rm(df1, df2, c1, c2, df)
 \author{
 Henrik Renlund
 }
-

@@ -45,10 +45,9 @@ dummy <- Hmisc::latex(M, r.perm='as.is', c.perm='alpha')
 # see vignette
 }
 }
-\author{
-Henrik Renlund
-}
 \seealso{
 \code{Hmisc::latex}, \code{\link{cr_group}}
 }
-
+\author{
+Henrik Renlund
+}

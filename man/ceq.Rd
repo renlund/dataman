@@ -27,4 +27,3 @@ ceq(x,y,na.equal=TRUE)
 \author{
 Henrik Renlund
 }
-

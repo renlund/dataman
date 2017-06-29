@@ -37,6 +37,11 @@ data_man <- function(name,
     if(check){
         if(!exists(var, get(where))) warning("[data_man] data base entry appears to be non-existing")
         tmp_var <- get(where)[[var]]
+        ## if(is.null(tmp_var)){
+        ##     warning(paste0("no variable '", var, "' in database '",
+        ##                    where, "'."))
+        ##     return(invisible(NULL))
+        ## }
         class_var <- class(tmp_var)
         the_label <- if(is.null(label)) {
                          if(!is.null(var_lab <- attr(tmp_var, "label"))){
@@ -47,12 +52,12 @@ data_man <- function(name,
                      } else label
         cat(paste(rep("-", options("width")[[1]]-3), collapse=""), "\n")
         cat("Adding data base '", where,"' entry '", var, "' as variable '", name,"'\n", sep = "")
-        cat("A variable of class: ", class_var, "\n")
+        cat("A variable of class: ", paste(class_var, collapse = ";"), "\n")
         #if(!any(class_var %in% c("Date", "POSIXct", "POSIXt"))){
         n_miss <- sum(is.na(tmp_var))
         perc_miss <- signif(100 * n_miss / length(tmp_var), 2)
         cat(paste0("There are ", n_miss, " (",perc_miss,"%) missing.\n"))
-        if(class_var %in% c("numeric", "integer")){
+        if(any(class_var %in% c("numeric", "integer"))){
             cat("\nSummary of numeric variable:")
             cat("\n    min:", min(tmp_var, na.rm=T), "\n    max:", max(tmp_var, na.rm=TRUE), "\n    mean:",mean(tmp_var, na.rm=TRUE), "\n")
         }
@@ -67,14 +72,14 @@ data_man <- function(name,
                     x <- x[!grepl("^ *$", x)]
                 }
                 x <- x[1:min(length(x), 20)]
-                if(length(x) & !class_var %in% c("numeric", "integer") ){
+                if(length(x) & !any(class_var %in% c("numeric", "integer")) ){
                     cat("\nThe first (at most 20) non-NA or non-empty values are:\n   ", paste0(x, collapse =", "), "\n")
                 } else if(!length(x)){
                     cat("There are only NA or empty values!\n")
                 }
             }
         }
-        if(class_var %in% c("Date", "POSIXct")){
+        if(any(class_var %in% c("Date", "POSIXct"))){
             cat("\nDates span from min =", as.character(min(tmp_var, na.rm = TRUE)),
                 "to max = ", as.character(max(tmp_var, na.rm = TRUE)), "\n")
         }

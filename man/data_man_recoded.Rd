@@ -15,4 +15,3 @@ Get the names of the variables that have been recoded
 \author{
 Henrik Renlund
 }
-

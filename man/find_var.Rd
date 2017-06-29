@@ -30,10 +30,9 @@ of R objects and returns the results as a list
 require(datasets)
 find_var(pattern="a", dfs=c("mtcars", "esoph"), index=TRUE)
 }
-\author{
-Henrik Renlund
-}
 \seealso{
 \code{\link{grepr}}, \code{\link{grep}}
 }
-
+\author{
+Henrik Renlund
+}
