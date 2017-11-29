@@ -1,7 +1,7 @@
 context("test-ish of 'data_man' functions")
 
 test_that("'data_man' works", {
-   library(testthat)
+   ## library(testthat)
    if(exists("data_man_container")) rm(data_man_container)
    #data_man("foo", "x", "CDB")
    data_man("foo", "x", "CDB", check=FALSE)
@@ -36,7 +36,6 @@ test_that("'data_man' works", {
       data_man("new_foo2", "foo", "df", recode = list("a" = c("ab", "b"), "c"="new_c"))
       data_man("new_z", "z", "df")
       data_man("new_u", "u", "df", comment = "wtf?")
-
       data_man_get_recode()
       make_df(data_man_container)
       (x <- make_df(data_man_container, comment = FALSE))

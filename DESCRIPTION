@@ -1,7 +1,7 @@
 Package: dataman
 Type: Package
 Title: Data management
-Version: 0.1.0.9004
+Version: 0.1.0.9005
 Date: 2015-04-01
 Author: Henrik Renlund
 Maintainer: Henrik Renlund <henrikrenlund@gmail.com>

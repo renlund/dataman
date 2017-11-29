@@ -18,6 +18,7 @@
 #' require(datasets)
 #' find_var(pattern="a", dfs=c("mtcars", "esoph"), index=TRUE)
 #' @seealso \code{\link{grepr}}, \code{\link{grep}}
+#' @return a list
 #' @export
 
 find_var <- function(pattern, dfs=TRUE, ignore.case=TRUE, ...) {
@@ -42,4 +43,72 @@ find_var <- function(pattern, dfs=TRUE, ignore.case=TRUE, ...) {
       }
    }
    L
+}
+
+##' get variables and labels
+##'
+##' get a data frame containing the variable and associated labels that are
+##'     associdated with some data set
+##' @param df a data frame (or similar object)
+##' @param name optionally, the name of the data frame for output
+##' @return a data frame
+var_lab <- function(df, name = as.character(substitute(df))){
+    foo <- function(x){
+        if(is.null(r <- attr(x, "label"))) "" else r
+    }
+    data.frame(
+        dataframe = name,
+        variable = names(df),
+        label = unlist(lapply(df, foo)),
+        stringsAsFactors = FALSE,
+        row.names = NULL
+    )
+}
+
+##' @describeIn find_var \code{find_info} only works on data frames (and similar
+##'     objects) and looks at variable names as well as possible labels
+##' @param verbose logical, show messages?
+find_info <- function(pattern, ignore.case = TRUE, ..., verbose = TRUE){
+    R <- NULL
+    for(K in ls(.GlobalEnv)){
+        if( "data.frame" %in% class(get(K, envir = .GlobalEnv))){
+            tmp <- subset(var_lab(get(K, envir = .GlobalEnv), name = K),
+                          subset = grepl(pattern = pattern, x = variable,
+                                         ignore.case = ignore.case, ... ) |
+                              grepl(pattern = pattern, x = label,
+                                    ignore.case = ignore.case, ... ))
+            R <- if(is.null(R)) tmp else rbind(R, tmp)
+        } else next
+    }
+    if(nrow(R) == 0){
+        if(verbose) message("find_info found nothing")
+        invisible(as.data.frame(NULL))
+    } else {
+        if(verbose) message("find_info found:")
+        R
+    }
+}
+
+if(FALSE){
+
+    AFG <- data.frame(
+        arg = 1,
+        boo = "a"
+    )
+    attr(AFG$arg, "label") <- "a label of sorts"
+    BRT <- data.frame(
+        farg = 2,
+        bobb = "b"
+    )
+    attr(BRT$bobb, "label") <- "another label of sorts"
+    attr(BRT$farg, "label") <- "lots if info"
+
+    var_lab(AFG)
+    var_lab(BRT)
+    find_info("or")
+    find_info("^foo")
+    find_var("o")
+
+    rm(AFG, BRT)
+
 }

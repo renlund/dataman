@@ -2,9 +2,12 @@
 % Please edit documentation in R/find_var.r
 \name{find_var}
 \alias{find_var}
+\alias{find_info}
 \title{Find variable}
 \usage{
 find_var(pattern, dfs = TRUE, ignore.case = TRUE, ...)
+
+find_info(pattern, ignore.case = TRUE, ..., verbose = TRUE)
 }
 \arguments{
 \item{pattern}{pattern to look for}
@@ -17,6 +20,11 @@ R objects is given, the \code{names} of these will be examined with \code{grepr}
 \item{ignore.case}{logical; should upper/lower case distinction be ignored? (default \code{TRUE})}
 
 \item{...}{arguments to be passed to \code{\link{grep}}}
+
+\item{verbose}{logical, show messages?}
+}
+\value{
+a list
 }
 \description{
 Look for a pattern in the \code{names} of R objects (typically data frames) and
@@ -26,6 +34,12 @@ return the hits
 This function applies \code{\link{grepr}} to \code{\link{names}} of a set
 of R objects and returns the results as a list
 }
+\section{Functions}{
+\itemize{
+\item \code{find_info}: \code{find_info} only works on data frames (and similar
+objects) and looks at variable names as well as possible labels
+}}
+
 \examples{
 require(datasets)
 find_var(pattern="a", dfs=c("mtcars", "esoph"), index=TRUE)
