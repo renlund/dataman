@@ -19,7 +19,7 @@ fixed_length(x, n = NULL, fill = " ", right = TRUE)
 character string
 }
 \description{
-elements of uniformal length
+elements of uniformal 'nchar' length
 }
 \details{
 make nchar have the same value for all elements of x

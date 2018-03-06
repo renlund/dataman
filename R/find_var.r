@@ -52,6 +52,7 @@ find_var <- function(pattern, dfs=TRUE, ignore.case=TRUE, ...) {
 ##' @param df a data frame (or similar object)
 ##' @param name optionally, the name of the data frame for output
 ##' @return a data frame
+##' @export
 var_lab <- function(df, name = as.character(substitute(df))){
     foo <- function(x){
         if(is.null(r <- attr(x, "label"))) "" else r
@@ -68,6 +69,7 @@ var_lab <- function(df, name = as.character(substitute(df))){
 ##' @describeIn find_var \code{find_info} only works on data frames (and similar
 ##'     objects) and looks at variable names as well as possible labels
 ##' @param verbose logical, show messages?
+##' @export
 find_info <- function(pattern, ignore.case = TRUE, ..., verbose = TRUE){
     R <- NULL
     for(K in ls(.GlobalEnv)){

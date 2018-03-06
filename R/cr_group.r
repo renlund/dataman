@@ -9,8 +9,6 @@
 #' @param cgroup the 'cgroup' attribute with length equal to \code{dim(object)[2]}
 #' @param colnames use this to set colnames (class \code{cr_group} can keep track of these under permutations (if object is 'data.frame' colnames are dropped under permuation)
 #' @export
-
-
 cr_group <- function(x,rgroup,cgroup,colnames){
     classy <- class(x)
     if( "cr_group" %in% classy) warning("[cr_group] 'x' is already of class 'cr_group")
@@ -39,7 +37,6 @@ cr_group <- function(x,rgroup,cgroup,colnames){
 
 # An unexported function that can create cr_group objects from a n*m matrix
 # This is only used in 'test_cr_group.r'
-
 CReator <- function(n=3, m=2, rg=TRUE, cg=TRUE, cn=TRUE, df=FALSE){
         M <- matrix(stats::rpois(n*m,15), nrow=n, ncol=m)
         if(df) M <- as.data.frame(M)
@@ -62,7 +59,6 @@ CReator <- function(n=3, m=2, rg=TRUE, cg=TRUE, cn=TRUE, df=FALSE){
 # - #  @param j second index
 # - #  @param ... arguments to be passed to \code{'['}
 #' @export
-
 '[.cr_group' <- function(x,i,j){
     class(x) <- setdiff(class(x), "cr_group")
     y <- '['(x,i,j,drop=FALSE)
@@ -78,7 +74,6 @@ CReator <- function(n=3, m=2, rg=TRUE, cg=TRUE, cn=TRUE, df=FALSE){
     class(y) <- c("cr_group", class(y))
     y
 }
-
 
 #' @title Latex method for objects of class \code{cr_group}
 #'
@@ -113,7 +108,6 @@ CReator <- function(n=3, m=2, rg=TRUE, cg=TRUE, cn=TRUE, df=FALSE){
 #' # see vignette
 #' }
 #' @export
-
 latex.cr_group <- function(object, r.perm="as.is", c.perm="as.is", colheads=TRUE, file="", title="", ...){
    if(!"cr_group" %in% class(object)){
       stop("[latex.cr_group] 'object' is not of class 'cr_group'.")
@@ -209,12 +203,9 @@ latex.cr_group <- function(object, r.perm="as.is", c.perm="as.is", colheads=TRUE
 # - # @param object an object
 # - # @param ... arguments to pass to \code{str}
 #' @export
-
 str.cr_group <- function(object, ...){
    class(object) <- setdiff(class(object), "cr_group")
    cat("An object of class 'cr_group' which contains:\n")
    #str(x, ...)
    NextMethod("str", object, ...)
 }
-
-

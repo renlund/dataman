@@ -1,4 +1,4 @@
-##' elements of uniformal length
+##' elements of uniformal 'nchar' length
 ##'
 ##' make nchar have the same value for all elements of x
 ##' @title fixed length
@@ -34,5 +34,3 @@ fixed_length <- function(x, n = NULL, fill = " ", right = TRUE){
     }
     z
 }
-
-
